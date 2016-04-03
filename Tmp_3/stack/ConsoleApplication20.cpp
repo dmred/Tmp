@@ -1,4 +1,4 @@
-// ConsoleApplication20.cpp: определяет точку входа для консольного приложения.
+// ConsoleApplication20.cpp: Г®ГЇГ°ГҐГ¤ГҐГ«ГїГҐГІ ГІГ®Г·ГЄГі ГўГµГ®Г¤Г  Г¤Г«Гї ГЄГ®Г­Г±Г®Г«ГјГ­Г®ГЈГ® ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГї.
 //
 
 
@@ -46,7 +46,7 @@ void del()
 {
 	if (st == NULL)
 	{
-		cout << "стек пустой" << endl;
+		cout << "Г±ГІГҐГЄ ГЇГіГ±ГІГ®Г©" << endl;
 	}
 	else
 	{
@@ -65,8 +65,8 @@ int main()
 	char str[64];
 	char *act = new char[64];
 	char strvyvod[256];
-	cout << "стэк :" << endl;
-	cout << "вход :" << endl;
+	cout << "Г±ГІГЅГЄ :" << endl;
+	cout << "ГўГµГ®Г¤ :" << endl;
 	fstream fin;
 	fin.open("text.txt", ios::in);
 	if (fin.is_open())
@@ -95,7 +95,7 @@ int main()
 			}
 		}
 	}
-	cout << "Выход :" << endl;
+	cout << "Г‚Г»ГµГ®Г¤ :" << endl;
 	for (int i = 0; i < m; i++)
 		cout << exit[i] << endl;
 	system("pause");
