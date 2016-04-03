@@ -94,6 +94,7 @@ int main()
 			}
 		}
 	}
+	fin.close();
 	cout << "Âûõîä :" << endl;
 	for (int i = 0; i < m; i++)
 		cout << exit[i] << endl;
