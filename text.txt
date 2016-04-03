@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+/** \func int sum(int a, int b) */
+int sum(int a, int b) {
+	return a+b;
+}
+
+/**
+	\func int main()
+*/
+int main()
+{
+	return 0;
+}
