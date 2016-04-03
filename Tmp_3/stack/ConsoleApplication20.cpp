@@ -64,7 +64,6 @@ int main()
 	int exit[20];
 	char str[64];
 	char *act = new char[64];
-	char strvyvod[256];
 	cout << "ñòýê :" << endl;
 	cout << "âõîä :" << endl;
 	fstream fin;
