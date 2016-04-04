@@ -102,5 +102,4 @@ int main()
 		cout << exit[i] << endl;
 	system("pause");
 	return 0;
-	return 0;
 }
