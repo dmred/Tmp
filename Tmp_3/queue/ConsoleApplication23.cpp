@@ -1,4 +1,4 @@
-// ConsoleApplication23.cpp: îïðåäåëÿåò òî÷êó âõîäà äëÿ êîíñîëüíîãî ïðèëîæåíèÿ.
+// ConsoleApplication23.cpp: Ã®Ã¯Ã°Ã¥Ã¤Ã¥Ã«Ã¿Ã¥Ã² Ã²Ã®Ã·ÃªÃ³ Ã¢ÃµÃ®Ã¤Ã  Ã¤Ã«Ã¿ ÃªÃ®Ã­Ã±Ã®Ã«Ã¼Ã­Ã®Ã£Ã® Ã¯Ã°Ã¨Ã«Ã®Ã¦Ã¥Ã­Ã¨Ã¿.
 //
 
 #include "stdafx.h"
@@ -8,22 +8,22 @@
 using namespace std;
 
 /** \func struct Node */
-struct Node //îïèñàíèå óçëà ñïèñêà
+struct Node //Ã®Ã¯Ã¨Ã±Ã Ã­Ã¨Ã¥ Ã³Ã§Ã«Ã  Ã±Ã¯Ã¨Ã±ÃªÃ 
 {
-	int data; //èíôîðìàöèîííîå ïîëå
-	Node *next; //óêàçàòåëü íà ñëåäóþùèé ýëåìåíò
+	int data; //Ã¨Ã­Ã´Ã®Ã°Ã¬Ã Ã¶Ã¨Ã®Ã­Ã­Ã®Ã¥ Ã¯Ã®Ã«Ã¥
+	Node *next; //Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¼ Ã­Ã  Ã±Ã«Ã¥Ã¤Ã³Ã¾Ã¹Ã¨Ã© Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²
 };
 
 /** \func struct Queue */
-struct Queue //îïèñàíèå î÷åðåäè
+struct Queue //Ã®Ã¯Ã¨Ã±Ã Ã­Ã¨Ã¥ Ã®Ã·Ã¥Ã°Ã¥Ã¤Ã¨
 {
-	int size; //ñ÷åò÷èê ðàçìåðà î÷åðåäè
-	Node *first; //óêàçàòåëü íà íà÷àëî î÷åðåäè
-	Node *last; //óêàçàòåëü íà êîíåö î÷åðåäè
+	int size; //Ã±Ã·Ã¥Ã²Ã·Ã¨Ãª Ã°Ã Ã§Ã¬Ã¥Ã°Ã  Ã®Ã·Ã¥Ã°Ã¥Ã¤Ã¨
+	Node *first; //Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¼ Ã­Ã  Ã­Ã Ã·Ã Ã«Ã® Ã®Ã·Ã¥Ã°Ã¥Ã¤Ã¨
+	Node *last; //Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¼ Ã­Ã  ÃªÃ®Ã­Ã¥Ã¶ Ã®Ã·Ã¥Ã°Ã¥Ã¤Ã¨
 };
 
 /** \func void Create(Queue *_queue) */
-void Create(Queue *_queue) //ñîçäàíèå î÷åðåäè
+void Create(Queue *_queue) //Ã±Ã®Ã§Ã¤Ã Ã­Ã¨Ã¥ Ã®Ã·Ã¥Ã°Ã¥Ã¤Ã¨
 {
 	_queue->first = new Node;
 	_queue->first->next = NULL;
@@ -38,19 +38,19 @@ int Top(Queue *_queue)
 }
 
 /** \func void Add(Queue *_queue, int newvalue) */
-void Add(Queue *_queue, int newvalue) //äîáàâëåíèå ýëåìåíòà
+void Add(Queue *_queue, int newvalue) //Ã¤Ã®Ã¡Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¥ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²Ã 
 {
 	_queue->last->next = new Node;
 	_queue->last = _queue->last->next;
-	_queue->last->data = newvalue; //äîáàâëåíèå ýëåìåíòà â êîíåö
-	_queue->last->next = NULL; //îáíóëåíèå óêàçàòåëÿ íà ñëåäóþùèé ýëåìåíò
+	_queue->last->data = newvalue; //Ã¤Ã®Ã¡Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¥ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²Ã  Ã¢ ÃªÃ®Ã­Ã¥Ã¶
+	_queue->last->next = NULL; //Ã®Ã¡Ã­Ã³Ã«Ã¥Ã­Ã¨Ã¥ Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¿ Ã­Ã  Ã±Ã«Ã¥Ã¤Ã³Ã¾Ã¹Ã¨Ã© Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²
 	_queue->size++;
 }
 
 /** \func void Delete(Queue *_queue) */
 void Delete(Queue *_queue)
 {
-	_queue->first = _queue->first->next; //ñìåùåíèå óêàçàòåëÿ
+	_queue->first = _queue->first->next; //Ã±Ã¬Ã¥Ã¹Ã¥Ã­Ã¨Ã¥ Ã³ÃªÃ Ã§Ã Ã²Ã¥Ã«Ã¿
 	_queue->size--;
 }
 
@@ -65,8 +65,8 @@ int main()
 	char strvyvod[256];
 	Queue Q;
 	Create(&Q);
-	cout << "Î÷åðåäü :" << endl;
-	cout << "Âõîä :" << endl;
+	cout << "ÃŽÃ·Ã¥Ã°Ã¥Ã¤Ã¼ :" << endl;
+	cout << "Ã‚ÃµÃ®Ã¤ :" << endl;
 	fstream fin;
 	fin.open("text.txt", ios::in);
 	if (fin.is_open())
@@ -95,8 +95,9 @@ int main()
 			}
 		}
 	}
+	fin.close();
 	cout << endl;
-	cout << "âûõîä :" << endl;
+	cout << "Ã¢Ã»ÃµÃ®Ã¤ :" << endl;
 	for (int i = 0; i < m; i++)
 		cout << exit[i] << endl;
 	system("pause");
