@@ -1,87 +1,75 @@
 #include <iostream>
-
-typedef unsigned int uint;
-
+#include <string>
 using namespace std;
 
-/**\param matrix − адрес буфера назначения
-* \param graphCount − количество графов
-*/
-/// Функция DijkstraAlg() − точка входа в функцию алгоритма Дейкстры
-void DijkstraAlg(uint** matrix, uint graphCount)
-{
-    ///> Алгоритм функции
-    ///- Инициализация переменных
-    uint* distance = new uint [graphCount];
-    bool* visited = new bool [graphCount];
-    uint k, index, u, i;
-    uint uintMax = INT_MAX * 2 + 1;
+class Orgraf{
+public:
+		Orgraf(int _V): V(_V), E(0){
+			M = new int*[V];
+			for (int i = 0; i < V; i++) {
+				M[i] = new int[V];
+				for (int j = 0; j < V; j++){
+					if (j == i) M[i][j] = 0;
+					else M[i][j] = -1;
+				}
+			}
+			r = new int[V];
+			for (int i = 0; i < V; i++) r[i] = -1;
+		}
+		void add(int v1, int v2, int w){
+			M[v1][v2] = w;
+			E++;
+		}
+		void Alg_Deigstry(int N){
+			r[N] = 0;
+			bool *added = new bool[V]; int /*x = -1,*/ y = N;
+			for (int i = 0; i < V; i++) added[i] = 0;
+			for (int i = 1; i < V; i++){
+				int x = -1;
+				for (int j = 1; j < V; j++){
+					if (!(added[j])){
+						if (r[j] == -1) {
+							if (M[N][j] != -1){
+								r[j] = r[N] + M[N][j]; if (x == -1 && y == N) { x = r[j]; y = j; }
+								else{
+									if (r[j] < x) { x = r[j]; }
+								}
+							}
+						}
+						else {
+							if (M[N][j] != -1){
+								if(M[N][j] < r[j]) {
+									r[j] = r[N] + M[N][j];
+									if (x == -1 && y == N) { x = r[j]; y = j; }
+									else if (r[j] < x) { x = r[j]; y = j; }
+								}
+							else { x = r[j]; y = j; }
+							}
+						}
+					}
+				}
+				N = y; 
+				added[N] = true;
+			}
+			for (int i = 0; i < V; i++) cout << r[i] << " "; cout << endl;
+		}
+private:
+	int V;
+	int E;
+	int** M;
+	int* r;
+};
 
-    ///- Подготовка массивов путей и посещений узлов
-    for (i = 0; i < graphCount; ++i) {
-        distance[i] = uintMax;
-        visited[i] = false;
-    }
-
-    ///- Расстояние от первого узла до самого себя равно 0
-    distance[0] = 0;
-
-    ///- Реализация алгоритма
-    for (k = 0; k < graphCount - 1; ++k) {
-        uint min = uintMax;
-        for (i = 0; i < graphCount; ++i)
-            if (!visited[i] && distance[i] <= min) {
-                min = distance[i];
-                index = i;
-            }
-        u = index;
-        visited[u] = true;
-        for (i = 0; i < graphCount; ++i)
-            if (
-                (!visited[i]) &&
-                (matrix[u][i]) &&
-                (distance[u] != uintMax) &&
-                (distance[u] + matrix[u][i] < distance[i])
-               )
-                distance[i] = distance[u] + matrix[u][i];
-    }
-
-    ///- Вывод значений кратчайших путей от первой вершины до остальных
-    for (i = 1; i < graphCount; ++i)
-        if (distance[i] != uintMax)
-            cout << "Minimal way(1-" << i + 1 << ") = " << distance[i] << endl;
-        else
-            cout << "Minimal way(1-" << i + 1 << ") = the minimal way does not exist" << endl;
-
-    ///- Освобождение выделенной под массивы памяти
-    free(distance);
-    free(visited);
-}
-
-/**\return {0} - выход из функции
-*/
-/// Функция main() − точка входа в программу
-int main()
-{
-    ///- Инициализация переменных
-    uint graphCount = 0;
-    uint** matrix = new uint* [graphCount];
-    
-    cout << "If the straight way doesn't exist, enter 0 for it." << endl;
-    cout << "Number of graphs = ";
-    cin >> graphCount;
-
-    ///- Заполнение матрицы смежности исходными данными
-    for (uint i = 0; i < graphCount; ++i) {
-        matrix[i] = new uint [graphCount];
-        for (uint j = 0; j < graphCount; ++j)
-            cin >> matrix[i][j];
-    }
-
-    ///- Вызов функции реализации алгоритма Дейкстры
-    DijkstraAlg(matrix, graphCount);
-
-    ///- Пауза в работе программы
-    system("pause");
-    return 0;
+void main(){
+	int V, E, N;
+	cin >> V >> E;
+	Orgraf G(V);
+	cin >> N;
+	for (int i = 0; i < E; i++){
+		int v1, v2, w;
+		cin >> v1 >> v2 >> w;
+		G.add(v1, v2, w);
+	}
+	G.Alg_Deigstry(N);
+	system("pause");
 }
