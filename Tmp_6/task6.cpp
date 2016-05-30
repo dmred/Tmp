@@ -1,75 +1,117 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <sstream>
+
 using namespace std;
 
-class Orgraf{
-public:
-		Orgraf(int _V): V(_V), E(0){
-			M = new int*[V];
-			for (int i = 0; i < V; i++) {
-				M[i] = new int[V];
-				for (int j = 0; j < V; j++){
-					if (j == i) M[i][j] = 0;
-					else M[i][j] = -1;
-				}
-			}
-			r = new int[V];
-			for (int i = 0; i < V; i++) r[i] = -1;
-		}
-		void add(int v1, int v2, int w){
-			M[v1][v2] = w;
-			E++;
-		}
-		void Alg_Deigstry(int N){
-			r[N] = 0;
-			bool *added = new bool[V]; int /*x = -1,*/ y = N;
-			for (int i = 0; i < V; i++) added[i] = 0;
-			for (int i = 1; i < V; i++){
-				int x = -1;
-				for (int j = 1; j < V; j++){
-					if (!(added[j])){
-						if (r[j] == -1) {
-							if (M[N][j] != -1){
-								r[j] = r[N] + M[N][j]; if (x == -1 && y == N) { x = r[j]; y = j; }
-								else{
-									if (r[j] < x) { x = r[j]; }
-								}
-							}
-						}
-						else {
-							if (M[N][j] != -1){
-								if(M[N][j] < r[j]) {
-									r[j] = r[N] + M[N][j];
-									if (x == -1 && y == N) { x = r[j]; y = j; }
-									else if (r[j] < x) { x = r[j]; y = j; }
-								}
-							else { x = r[j]; y = j; }
-							}
-						}
-					}
-				}
-				N = y; 
-				added[N] = true;
-			}
-			for (int i = 0; i < V; i++) cout << r[i] << " "; cout << endl;
-		}
+class Graph {
 private:
-	int V;
-	int E;
-	int** M;
-	int* r;
+	size_t num_root; // номер выделенного узла
+	size_t num_nodes; // кол-во узлов
+	size_t num_edges; // кол-во ребер
+	size_t** matrix; // матрица связей
+public:
+	Graph(size_t num_r, size_t nodes_num, size_t edges_num);
+	void getData(string& expression);
+	void Dijkstra_algorithm();
+	~Graph();
 };
 
-void main(){
-	int V, E, N;
-	cin >> V >> E;
-	Orgraf G(V);
-	cin >> N;
-	for (int i = 0; i < E; i++){
-		int v1, v2, w;
-		cin >> v1 >> v2 >> w;
-		G.add(v1, v2, w);
+vector<string> split(const string &s, char delim);
+
+int main() {
+	size_t num_nodes, num_edges, num_root;
+	cin >> num_nodes;
+	cin >> num_edges;
+	cin >> num_root;
+	Graph graph(num_root, num_nodes, num_edges);
+	string expression;
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+	for (int i = 0; i < num_edges; i++) {
+		getline(cin, expression);
+		graph.getData(expression);
 	}
-	G.Alg_Deigstry(N);
+	graph.Dijkstra_algorithm();
+
 	system("pause");
+	return 0;
+}
+
+Graph::Graph(size_t num_r, size_t nodes_num, size_t edges_num) {
+	num_root = num_r;
+	num_nodes = nodes_num;
+	num_edges = edges_num;
+	matrix = new size_t*[num_nodes];
+
+	for (int i = 0; i < num_nodes; i++)
+		matrix[i] = new size_t[num_nodes];
+
+	for (int i = 0; i < num_nodes; i++)
+		for (int j = 0; j < num_nodes; j++)
+			matrix[i][j] = 0;
+}
+
+void Graph::getData(string& expression) {
+	vector<string> data = split(expression, ' ');
+	if (data.size() != 3)
+		return;
+	if (stoi(data[0]) >= num_nodes || stoi(data[1]) >= num_nodes)
+		return;
+	matrix[stoi(data[0])][stoi(data[1])] = stoi(data[2]);
+}
+
+void Graph::Dijkstra_algorithm() {
+	size_t* distances = new size_t[num_nodes];
+	bool* isVisited = new bool[num_nodes];
+
+	for (int i = 0; i < num_nodes; i++) {
+		distances[i] = SIZE_MAX;
+		isVisited[i] = false;
+	}
+
+	distances[num_root] = 0;
+	size_t index, u;
+
+	for (int i = 0; i < num_nodes - 1; i++) {
+		size_t min = SIZE_MAX;
+
+		for (int j = 0; j < num_nodes; j++)
+			if (!isVisited[j] && distances[j] <= min) {
+				min = distances[j];
+				index = j;
+			}
+
+		u = index;
+		isVisited[u] = true;
+
+		for (int j = 0; j < num_nodes; j++)
+			if (!isVisited[j] && matrix[u][j] && distances[u] != SIZE_MAX && distances[u] + matrix[u][j] < distances[j])
+				distances[j] = distances[u] + matrix[u][j];
+	}
+
+	for (int i = 0; i < num_nodes; i++)
+		if (distances[i] != SIZE_MAX)
+			cout << distances[i] << "  ";
+		else
+			cout << "inf  ";
+	cout << endl;
+}
+
+Graph::~Graph() {
+	for (int i = 0; i < num_nodes; i++)
+		delete matrix[i];
+	delete matrix;
+}
+
+vector<string> split(const string &s, char delim) {
+	vector<string> elems;
+	stringstream ss(s);
+	string item;
+
+	while (getline(ss, item, delim))
+		elems.push_back(item);
+
+	return elems;
 }
