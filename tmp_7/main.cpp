@@ -46,6 +46,7 @@ int main(int argc, char* argv[])
 	pQueue->create(stoi(expression));
 	vector<string> expressions;
 	int size;
+	//Redchenko incorp.
 	while (getline(fin, expression))
 	{
 		expressions = split(expression, ' ');
